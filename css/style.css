@@ -1,0 +1,926 @@
+/* ==========================================
+   LUCAS JOUIN — Portfolio Freelance
+   ==========================================
+   Variables, reset, layout, composants
+   ========================================== */
+
+/* ── CSS Custom Properties ── */
+:root {
+  --color-bg: #292929;
+  --color-text: #f5f5f5;
+  --color-text-muted: #a0a0a0;
+  --color-accent: #ffffff;
+  --color-green: #35CD3D;
+  --color-border: #444444;
+  --color-placeholder: #3a3a3a;
+
+  --font-main: 'Space Mono', monospace;
+
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2.5rem;
+  --spacing-xl: 4rem;
+  --spacing-2xl: 6rem;
+
+  --layout-left-width: 80px;
+  --layout-right-width: 260px;
+  --layout-gap: 2rem;
+  --layout-center-max-width: 360px;
+
+  --transition-speed: 0.3s;
+  --transition-ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ── Reset & Base ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-main);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* Screen-reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ==========================================
+   LAYOUT — 3 colonnes
+   ========================================== */
+.layout {
+  display: grid;
+  grid-template-columns: var(--layout-left-width) 1fr var(--layout-right-width);
+  gap: var(--layout-gap);
+  min-height: 100vh;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-lg) var(--spacing-md);
+}
+
+/* ── Colonne gauche : Logo sticky ── */
+.layout__left {
+  position: sticky;
+  top: var(--spacing-lg);
+  align-self: start;
+  height: fit-content;
+}
+
+.logo__img {
+  width: 90px;
+  height: auto;
+}
+
+/* ── Colonne centre : Contenu scrollable ── */
+.layout__center {
+  max-width: var(--layout-center-max-width);
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* ── Colonne droite : Sidebar sticky ── */
+.layout__right {
+  position: sticky;
+  top: var(--spacing-lg);
+  align-self: start;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+/* ==========================================
+   SIDEBAR — Navigation par ancres
+   ========================================== */
+.sidebar-nav__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.sidebar-nav__link {
+  display: block;
+  padding: var(--spacing-xs) 0;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: color var(--transition-speed) var(--transition-ease);
+  position: relative;
+}
+
+.sidebar-nav__link:hover,
+.sidebar-nav__link:focus-visible {
+  color: var(--color-accent);
+}
+
+.sidebar-nav__link--active {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+/* ── Sidebar infos (scores, toggle, mentions) ── */
+.sidebar-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--color-border);
+}
+
+.sidebar-info__item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.sidebar-info__label {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.sidebar-info__value {
+  font-size: 0.875rem;
+  color: var(--color-text);
+}
+
+.sidebar-info__link {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: color var(--transition-speed);
+}
+
+.sidebar-info__link:hover,
+.sidebar-info__link:focus-visible {
+  color: var(--color-accent);
+}
+
+/* ── Toggle animations ── */
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  cursor: pointer;
+}
+
+.toggle__label {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.toggle__input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle__slider {
+  width: 40px;
+  height: 22px;
+  background-color: var(--color-border);
+  border-radius: 11px;
+  position: relative;
+  transition: background-color var(--transition-speed);
+  flex-shrink: 0;
+}
+
+.toggle__slider::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 16px;
+  height: 16px;
+  background-color: var(--color-text);
+  border-radius: 50%;
+  transition: transform var(--transition-speed);
+}
+
+.toggle__input:checked + .toggle__slider {
+  background-color: var(--color-accent);
+}
+
+.toggle__input:checked + .toggle__slider::after {
+  transform: translateX(18px);
+  background-color: var(--color-bg);
+}
+
+.toggle__input:focus-visible + .toggle__slider {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* ==========================================
+   SECTIONS — Styles communs
+   ========================================== */
+.section {
+  padding: 32px 0;
+}
+
+.section:first-child {
+  padding-top: 0;
+}
+
+.section__title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--color-accent);
+}
+
+
+/* ── Placeholders (contenus à venir) ── */
+.placeholder {
+  color: var(--color-text-muted);
+  font-style: italic;
+  font-size: 0.875rem;
+}
+
+.placeholder-img {
+  background-color: var(--color-placeholder);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  font-style: italic;
+}
+
+.placeholder-img--landscape {
+  min-height: 180px;
+}
+
+/* ==========================================
+   SECTION : Bienvenue
+   ========================================== */
+
+/* ── Curseur clignotant style Minitel / vieux terminal ── */
+.cursor-blink {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-color: var(--color-accent);
+  margin-left: 0.15em;
+  vertical-align: middle;
+  color: transparent;
+  animation: blink-cursor 1s step-end infinite;
+}
+
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.bienvenue__intro {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ── Accroche (texte au-dessus de la photo) ── */
+.bienvenue__accroche {
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.bienvenue__name {
+  font-weight: 700;
+  font-style: italic;
+}
+
+.bienvenue__gribouilli {
+  display: inline-block;
+  width: 46px;
+  height: 24px;
+  vertical-align: middle;
+  margin-left: 0.25em;
+}
+
+.bienvenue__ville {
+  color: var(--color-green);
+  font-weight: 700;
+  font-style: italic;
+}
+
+/* ── Photo ── */
+.bienvenue__photo {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.bienvenue__photo .placeholder-img {
+  min-height: 340px;
+  border-radius: 12px;
+  background-color: #e8e8e8;
+}
+
+/* ── Bio (texte sous la photo) ── */
+.bienvenue__bio {
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+/* ==========================================
+   SECTION : Projets — Accordéons
+   ========================================== */
+.accordion {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.accordion:last-of-type {
+  border-bottom: none;
+}
+
+/* ── Trigger (bouton accordéon) ── */
+.accordion__trigger {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 12px 16px;
+  background: none;
+  border: none;
+  color: var(--color-text);
+  font-size: 16px;
+  font-weight: 600;
+  font-style: italic;
+  cursor: pointer;
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+  font-family: inherit;
+  border-radius: 6px;
+}
+
+.accordion__trigger:hover,
+.accordion__trigger:focus-visible {
+  color: var(--color-accent);
+}
+
+/* ── État actif : fond #3C3C3C ── */
+.accordion__trigger[aria-expanded="true"] {
+  background-color: #3C3C3C;
+}
+
+/* ── Icône +/- ── */
+.accordion__icon {
+  width: 16px;
+  height: 16px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.accordion__icon::before,
+.accordion__icon::after {
+  content: '';
+  position: absolute;
+  background-color: currentColor;
+  transition: transform var(--transition-speed) var(--transition-ease);
+}
+
+.accordion__icon::before {
+  width: 100%;
+  height: 2px;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.accordion__icon::after {
+  width: 2px;
+  height: 100%;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+}
+
+.accordion__trigger[aria-expanded="true"] .accordion__icon::after {
+  transform: translateX(-50%) rotate(90deg);
+  opacity: 0;
+}
+
+/* ── Contenu accordéon ── */
+.accordion__content {
+  overflow: hidden;
+  transition: max-height var(--transition-speed) var(--transition-ease);
+}
+
+.accordion__inner {
+  padding: 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.accordion__inner p {
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+/* ── Listes à puces dans accordéon ── */
+.accordion__list {
+  list-style: disc;
+  padding-left: 1.2em;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.accordion__list li {
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+/* ── Liens dans accordéon (soulignés) ── */
+.accordion__link {
+  color: var(--color-text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: opacity var(--transition-speed);
+}
+
+.accordion__link:hover,
+.accordion__link:focus-visible {
+  opacity: 0.7;
+}
+
+/* ── Galerie d'images (thumbnails cliquables) ── */
+.accordion__gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.accordion__thumb {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: opacity var(--transition-speed);
+}
+
+.accordion__thumb:hover,
+.accordion__thumb:focus-visible {
+  opacity: 0.85;
+}
+
+.accordion__thumb img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.placeholder-img--thumb {
+  min-height: 180px;
+  border-radius: 8px;
+}
+
+/* ==========================================
+   LIGHTBOX — Visualisation d'images
+   ========================================== */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-lg);
+}
+
+.lightbox[hidden] {
+  display: none;
+}
+
+.lightbox__overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.85);
+}
+
+.lightbox__monitor {
+  position: relative;
+  max-width: 90vw;
+  max-height: 85vh;
+  background-color: #1a1a1a;
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.lightbox__screen {
+  border-radius: 6px;
+  overflow: hidden;
+  background-color: #000;
+}
+
+.lightbox__img {
+  display: block;
+  max-width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+}
+
+.lightbox__close {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  background: none;
+  border: none;
+  color: var(--color-text);
+  font-size: 32px;
+  cursor: pointer;
+  padding: 4px 8px;
+  line-height: 1;
+  transition: opacity var(--transition-speed);
+  z-index: 1001;
+}
+
+.lightbox__close:hover,
+.lightbox__close:focus-visible {
+  opacity: 0.6;
+}
+
+/* ── Logos clients ── */
+.clients-logos {
+  margin-top: 16px;
+}
+
+.clients-logos__grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px 32px;
+  align-items: center;
+}
+
+.clients-logos__item {
+  max-height: 48px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  opacity: 0.85;
+  transition: opacity var(--transition-speed);
+}
+
+.clients-logos__item:hover {
+  opacity: 1;
+}
+
+/* ==========================================
+   SECTION : Valeurs
+   ========================================== */
+.valeurs__liste {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+.valeur {
+  text-align: center;
+}
+
+.valeur__icon {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto var(--spacing-sm);
+  background-color: var(--color-placeholder);
+  border-radius: 50%;
+}
+
+.valeur__title {
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--spacing-xs);
+}
+
+.valeur__description {
+  font-size: 16px;
+  color: var(--color-text-muted);
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* ==========================================
+   SECTION : Avis
+   ========================================== */
+.avis__liste {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.avis {
+  margin: 0;
+}
+
+/* ── Guillemet ouvrante stylisée ── */
+.avis__quote-open {
+  display: block;
+  font-size: 2.5em;
+  line-height: 1;
+  font-family: Georgia, serif;
+}
+
+.avis__texte {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--color-text);
+  font-style: italic;
+  margin-bottom: 8px;
+}
+
+.avis__auteur cite {
+  font-style: normal;
+  font-size: 16px;
+}
+
+.avis__link {
+  color: var(--color-text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: opacity var(--transition-speed);
+}
+
+.avis__link:hover,
+.avis__link:focus-visible {
+  opacity: 0.7;
+}
+
+/* ── Séparateur étoiles entre avis ── */
+.avis__separator {
+  text-align: center;
+  color: var(--color-accent);
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  padding: 8px 0;
+}
+
+/* ==========================================
+   SECTION : Pour qui je vote ? (Photos)
+   ========================================== */
+.vote__intro {
+  font-size: 16px;
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+.vote__gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.vote__figure {
+  margin: 0;
+}
+
+.vote__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.vote__caption {
+  font-size: 16px;
+  font-style: italic;
+  color: var(--color-text-muted);
+  margin-top: 8px;
+  line-height: 1.5;
+}
+
+/* ==========================================
+   SECTION : Rendez-vous
+   ========================================== */
+.section--rdv {
+  text-align: center;
+}
+
+.rdv__texte {
+  margin-bottom: var(--spacing-lg);
+  color: var(--color-text-muted);
+}
+
+/* ── Bouton principal ── */
+.btn {
+  display: inline-block;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all var(--transition-speed) var(--transition-ease);
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+}
+
+.btn--primary {
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+}
+
+.btn--primary:hover,
+.btn--primary:focus-visible {
+  opacity: 0.85;
+  transform: translateY(-1px);
+}
+
+/* ==========================================
+   SECTION : FAQ
+   ========================================== */
+.faq__liste {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.faq__item {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.faq__question {
+  padding: var(--spacing-md) 0;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  list-style: none;
+  transition: color var(--transition-speed);
+}
+
+.faq__question::-webkit-details-marker {
+  display: none;
+}
+
+.faq__question:hover,
+.faq__question:focus-visible {
+  color: var(--color-accent);
+}
+
+.faq__intro {
+  font-size: 16px;
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+.faq__answer {
+  padding: 0 0 var(--spacing-md) 0;
+  font-size: 16px;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+}
+
+.faq__easter-egg {
+  margin-top: 32px;
+  font-size: 12px;
+  color: var(--color-text-muted);
+  opacity: 0.4;
+}
+
+/* ==========================================
+   ACCESSIBILITÉ : Respect prefers-reduced-motion
+   ========================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── Mode sans animations (toggle) ── */
+body.no-animations *,
+body.no-animations *::before,
+body.no-animations *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+
+/* ==========================================
+   FOCUS VISIBLE (accessibilité clavier)
+   ========================================== */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* ==========================================
+   FOOTER (mobile uniquement)
+   ========================================== */
+.site-footer {
+  display: none; /* Masqué en desktop */
+}
+
+.site-footer__inner {
+  max-width: var(--layout-center-max-width);
+  margin: 0 auto;
+  padding: var(--spacing-xl) var(--spacing-md) var(--spacing-lg);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.site-footer__item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.site-footer__label {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.site-footer__value {
+  font-size: 0.875rem;
+  color: var(--color-text);
+}
+
+.site-footer__link {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: color var(--transition-speed);
+}
+
+.site-footer__link:hover,
+.site-footer__link:focus-visible {
+  color: var(--color-accent);
+}
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+@media (max-width: 1024px) {
+  /* On passe en une seule colonne, le contenu seul */
+  .layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 100%;
+  }
+
+  /* Logo et sidebar masqués */
+  .layout__left,
+  .layout__right {
+    display: none;
+  }
+
+  /* Le contenu central prend toute la place */
+  .layout__center {
+    max-width: var(--layout-center-max-width);
+    width: 100%;
+    padding: 0 var(--spacing-md);
+  }
+
+  /* Le footer apparaît */
+  .site-footer {
+    display: block;
+  }
+}
