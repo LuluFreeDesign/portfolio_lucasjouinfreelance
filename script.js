@@ -28,16 +28,22 @@ if (sections[0]) setActive(sections[0].id);
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = lightbox.querySelector('.lightbox-img');
 const lightboxClose = lightbox.querySelector('.lightbox-close');
+const lightboxCaption = lightbox.querySelector('.lightbox-caption');
 
 const openLightbox = (img) => {
   lightboxImg.src = img.src;
   lightboxImg.alt = img.alt;
+  const caption = img.dataset.caption || '';
+  lightboxCaption.textContent = caption;
+  lightboxCaption.hidden = !caption;
   lightbox.hidden = false;
 };
 
 const closeLightbox = () => {
   lightbox.hidden = true;
   lightboxImg.src = '';
+  lightboxCaption.textContent = '';
+  lightboxCaption.hidden = true;
 };
 
 document.querySelectorAll('.exp-img').forEach((img) => {
