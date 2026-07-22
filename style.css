@@ -29,7 +29,7 @@ h1, h2, h3, p, ul, figure, blockquote {
 }
 
 a {
-  color: inherit;
+  color: var(--color-accent);
 }
 
 .page {
@@ -93,6 +93,32 @@ a {
 
 .accent {
   color: var(--color-accent);
+}
+
+/* --- Blinking cursor square (Minitel-style) next to the main title --- */
+
+.title-cursor {
+  display: inline-block;
+  width: 0.62em;
+  height: 0.62em;
+  margin-left: 0.35em;
+  vertical-align: 0.02em;
+  background: var(--color-white);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .title-cursor {
+    animation: cursor-blink 1.1s infinite;
+  }
+}
+
+@keyframes cursor-blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  50.01%, 100% {
+    opacity: 0;
+  }
 }
 
 .photo-placeholder {
@@ -185,7 +211,6 @@ a {
 }
 
 .exp-text a {
-  color: var(--color-accent);
   text-decoration: underline;
 }
 
@@ -352,6 +377,7 @@ a {
   font-weight: 700;
   font-size: 1.625rem;
   text-align: center;
+  color: var(--color-accent);
 }
 
 .quote {
@@ -360,7 +386,6 @@ a {
 }
 
 .testimonial-content a {
-  color: var(--color-accent);
   font-weight: 700;
   font-size: 0.875rem;
   text-decoration: underline;
@@ -412,7 +437,6 @@ a {
 }
 
 .faq-item a {
-  color: var(--color-accent);
   text-decoration: underline;
 }
 
@@ -483,6 +507,7 @@ a {
   text-decoration: none;
   font-weight: 700;
   font-size: 0.9375rem;
+  color: var(--color-text);
 }
 
 .side-nav-link .dot {
@@ -580,20 +605,29 @@ a {
     grid-column: 1;
   }
 
-  .site-logo {
+  .main-content {
     order: 1;
   }
 
-  .main-content {
-    order: 2;
-  }
-
   .side-menu {
-    order: 3;
+    order: 2;
     justify-self: stretch;
     max-width: none;
     text-align: left;
     margin-top: 2rem;
+  }
+
+  /* Logo moves to the bottom (footer) on mobile */
+  .site-logo {
+    order: 3;
+    margin-top: 2.5rem;
+  }
+
+  /* Hide the in-page anchor navigation on mobile — scrolling is enough */
+  .side-menu > .side-menu-label,
+  .side-menu > .side-menu-sub,
+  .side-menu > nav {
+    display: none;
   }
 
   .side-nav-link {
