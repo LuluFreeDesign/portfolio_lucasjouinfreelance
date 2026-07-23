@@ -61,6 +61,30 @@ a {
   height: auto;
 }
 
+/* Bandeau (landmark) sans impact sur la grille */
+.site-header {
+  display: contents;
+}
+
+/* Lien d'évitement, visible uniquement au focus clavier */
+.skip-link {
+  position: absolute;
+  left: 0.5rem;
+  top: -3.5rem;
+  z-index: 300;
+  padding: 0.5rem 1rem;
+  background: var(--color-white);
+  color: var(--color-bg);
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: var(--radius);
+  transition: top 0.15s ease;
+}
+
+.skip-link:focus {
+  top: 0.5rem;
+}
+
 /* --- Main scrolling content --- */
 
 .main-content {
