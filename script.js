@@ -25,6 +25,24 @@ sections.forEach((section) => observer.observe(section));
 
 if (sections[0]) setActive(sections[0].id);
 
+// --- Améliorations d'accessibilité (RGAA) ---
+const isEN = document.documentElement.lang === 'en';
+
+// 13.5 — alternative textuelle de la note en étoiles
+const starLabel = isEN ? 'Rating: 5 out of 5 stars' : 'Note : 5 sur 5 étoiles';
+document.querySelectorAll('.stars').forEach((s) => {
+  s.setAttribute('role', 'img');
+  s.setAttribute('aria-label', starLabel);
+});
+
+// 6.1 — intitulés de liens explicites pour les avis (nom de la personne)
+const linkedinBase = isEN ? 'See the LinkedIn profile of ' : 'Voir le profil LinkedIn de ';
+document.querySelectorAll('.testimonial-content a').forEach((a) => {
+  const card = a.closest('.accordion');
+  const title = card && card.querySelector('.accordion-title');
+  if (title) a.setAttribute('aria-label', linkedinBase + title.textContent.trim());
+});
+
 const lightbox = document.getElementById('lightbox');
 
 if (lightbox) {
@@ -32,24 +50,42 @@ if (lightbox) {
   const lightboxClose = lightbox.querySelector('.lightbox-close');
   const lightboxCaption = lightbox.querySelector('.lightbox-caption');
 
+  let lightboxTrigger = null;
+
   const openLightbox = (img) => {
+    lightboxTrigger = img;
     lightboxImg.src = img.src;
     lightboxImg.alt = img.alt;
     const caption = img.dataset.caption || '';
     lightboxCaption.textContent = caption;
     lightboxCaption.hidden = !caption;
     lightbox.hidden = false;
+    lightboxClose.focus();
   };
 
   const closeLightbox = () => {
     lightbox.hidden = true;
-    lightboxImg.src = '';
+    lightboxImg.removeAttribute('src');
     lightboxCaption.textContent = '';
     lightboxCaption.hidden = true;
+    if (lightboxTrigger) {
+      lightboxTrigger.focus();
+      lightboxTrigger = null;
+    }
   };
 
+  // 7.3 — images agrandissables opérables au clavier (bouton + Entrée/Espace)
   document.querySelectorAll('.exp-img').forEach((img) => {
+    img.setAttribute('role', 'button');
+    img.setAttribute('tabindex', '0');
+    img.setAttribute('aria-haspopup', 'dialog');
     img.addEventListener('click', () => openLightbox(img));
+    img.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openLightbox(img);
+      }
+    });
   });
 
   lightboxClose.addEventListener('click', closeLightbox);
@@ -58,6 +94,13 @@ if (lightbox) {
   });
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && !lightbox.hidden) closeLightbox();
+  });
+  // piège de focus : maintenir le focus dans la boîte de dialogue
+  lightbox.addEventListener('keydown', (event) => {
+    if (event.key === 'Tab' && !lightbox.hidden) {
+      event.preventDefault();
+      lightboxClose.focus();
+    }
   });
 }
 
@@ -140,6 +183,9 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
     } else {
       animateScrollTo(targetY, 500);
     }
+    // 12.7 — déplacer le focus vers la cible (lien d'évitement / navigation)
+    if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
+    target.focus({ preventScroll: true });
     history.pushState(null, '', `#${id}`);
   });
 });
