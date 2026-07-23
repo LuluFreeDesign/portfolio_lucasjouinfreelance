@@ -9,20 +9,19 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../style.css">
+<script>try{if(localStorage.getItem('site-animations')==='off')document.documentElement.classList.add('no-animations');}catch(e){}</script>
 </head>
 <body>
 <div id="top" class="page">
 
   <a href="#top" class="site-logo">
-    <span>lucas</span>
-    <span>jouin</span>
-    <span>freelance</span>
+    <img src="../assets/logo-lucas-jouin.svg" alt="lucas jouin freelance" class="site-logo-img">
   </a>
 
   <main class="main-content">
 
     <section id="who-is-he" class="section" aria-labelledby="who-is-he-heading">
-      <h1 id="who-is-he-heading">Welcome<span class="title-cursor" aria-hidden="true"></span></h1>
+      <h1 id="who-is-he-heading">Who's this?<span class="title-cursor" aria-hidden="true"></span></h1>
       <div class="content-block">
         <p class="bio-intro">
           I'm <b><i>Lucas</i></b><br>
@@ -37,12 +36,15 @@
     </section>
 
     <section id="what-has-he-done" class="section" aria-labelledby="what-has-he-done-heading">
-      <h2 id="what-has-he-done-heading">We've worked together</h2>
+      <h2 id="what-has-he-done-heading">What has he done?</h2>
 
       <div class="accordion-list">
         <details class="accordion">
           <summary>
-            <span class="accordion-title">Akeneo</span>
+            <span class="accordion-head">
+              <img src="../assets/logos/akeneo.svg" alt="" class="accordion-logo">
+              <span class="accordion-title">Akeneo</span>
+            </span>
             <svg class="chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </summary>
           <div class="accordion-content">
@@ -62,7 +64,10 @@
         </details>
         <details class="accordion">
           <summary>
-            <span class="accordion-title">Greenly</span>
+            <span class="accordion-head">
+              <img src="../assets/logos/greenly.svg" alt="" class="accordion-logo">
+              <span class="accordion-title">Greenly</span>
+            </span>
             <svg class="chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </summary>
           <div class="accordion-content">
@@ -81,7 +86,10 @@
         </details>
         <details class="accordion">
           <summary>
-            <span class="accordion-title">beta.gouv.fr</span>
+            <span class="accordion-head">
+              <img src="../assets/logos/beta-gouv.svg" alt="" class="accordion-logo">
+              <span class="accordion-title">beta.gouv.fr</span>
+            </span>
             <svg class="chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </summary>
           <div class="accordion-content">
@@ -130,7 +138,7 @@
     </section>
 
     <section id="how-does-he-work" class="section" aria-labelledby="how-does-he-work-heading">
-      <h2 id="how-does-he-work-heading">How I work</h2>
+      <h2 id="how-does-he-work-heading">How does he work?</h2>
       <div class="values">
         <div class="value">
           <img src="../assets/icons/taureau.svg" alt="" class="value-icon">
@@ -145,13 +153,13 @@
         <div class="value">
           <img src="../assets/icons/verseau.svg" alt="" class="value-icon">
           <h3>Proactive</h3>
-          <p>Versatile, I like being a team's Swiss Army knife across areas such as business development, SEO, accessibility and code.</p>
+          <p>Versatile, I like being a team's Swiss Army knife and lending a hand on areas such as SEO, accessibility, code, or even marketing and business development/loyalty.</p>
         </div>
       </div>
     </section>
 
     <section id="what-do-they-think" class="section" aria-labelledby="what-do-they-think-heading">
-      <h2 id="what-do-they-think-heading">What they thought</h2>
+      <h2 id="what-do-they-think-heading">What do they think?</h2>
 
       <div class="accordion-list">
         <details class="accordion">
@@ -169,6 +177,7 @@
           </div>
         </details>
 
+        <div class="accordion-pair">
         <details class="accordion">
           <summary>
             <span class="accordion-title-group">
@@ -183,6 +192,21 @@
             <a href="https://www.linkedin.com/in/bianca-chong/" target="_blank" rel="noopener">See on LinkedIn</a>
           </div>
         </details>
+        <details class="accordion">
+          <summary>
+            <span class="accordion-title-group">
+              <span class="accordion-title">Raphaël Mucha</span>
+              <span class="accordion-subtitle">Greenly</span>
+            </span>
+            <svg class="chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </summary>
+          <div class="accordion-content testimonial-content">
+            <p class="stars">*****</p>
+            <p class="quote">“I worked in Lucas's design team for 6 months — a great experience! Lucas is a very attentive manager who always gives good advice. He cares a lot about his team's wellbeing and makes room for open discussion. Always up for trying new methods and tools suggested by the team: I really appreciated his critical, well-founded and caring perspective. I highly recommend working with Lucas 💪”</p>
+            <a href="https://www.linkedin.com/in/raphael-mucha/" target="_blank" rel="noopener">See on LinkedIn</a>
+          </div>
+        </details>
+        </div>
 
         <details class="accordion">
           <summary>
@@ -232,22 +256,7 @@
         <details class="accordion">
           <summary>
             <span class="accordion-title-group">
-              <span class="accordion-title">Raphaël Mucha</span>
-              <span class="accordion-subtitle">Greenly</span>
-            </span>
-            <svg class="chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </summary>
-          <div class="accordion-content testimonial-content">
-            <p class="stars">*****</p>
-            <p class="quote">“I worked in Lucas's design team for 6 months — a great experience! Lucas is a very attentive manager who always gives good advice. He cares a lot about his team's wellbeing and makes room for open discussion. Always up for trying new methods and tools suggested by the team: I really appreciated his critical, well-founded and caring perspective. I highly recommend working with Lucas 💪”</p>
-            <a href="https://www.linkedin.com/in/raphael-mucha/" target="_blank" rel="noopener">See on LinkedIn</a>
-          </div>
-        </details>
-
-        <details class="accordion">
-          <summary>
-            <span class="accordion-title-group">
-              <span class="accordion-title">Peggy M</span>
+              <span class="accordion-title">Peggy Mertiny</span>
               <span class="accordion-subtitle">Zéro Logement Vacant</span>
             </span>
             <svg class="chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -261,8 +270,14 @@
       </div>
     </section>
 
+    <section id="can-i-reach-him" class="section" aria-labelledby="can-i-reach-him-heading">
+      <h2 id="can-i-reach-him-heading">Can I reach him?</h2>
+      <p>My calendar is wide open if you'd like to chat about questions or your project.</p>
+      <a href="https://cal.com/lucasjouin/appel-de-decouverte" target="_blank" rel="noopener" class="cta-button">Book a meeting</a>
+    </section>
+
     <section id="who-does-he-vote-for" class="section" aria-labelledby="who-does-he-vote-for-heading">
-      <h2 id="who-does-he-vote-for-heading">Who do I vote for?</h2>
+      <h2 id="who-does-he-vote-for-heading">Who does he vote for?</h2>
       <p>Oops, sorry, I'm getting ahead of myself! In exchange, and to tell you a bit more about myself, here are some photos of places I love.</p>
 
       <figure class="photo-caption">
@@ -281,14 +296,8 @@
       </figure>
     </section>
 
-    <section id="can-i-reach-him" class="section" aria-labelledby="can-i-reach-him-heading">
-      <h2 id="can-i-reach-him-heading">Here to listen</h2>
-      <p>My calendar is wide open if you'd like to chat about questions or your project.</p>
-      <a href="https://cal.com/lucasjouin/appel-de-decouverte" target="_blank" rel="noopener" class="cta-button">Book a meeting</a>
-    </section>
-
     <section id="no-time-to-read" class="section" aria-labelledby="no-time-to-read-heading">
-      <h2 id="no-time-to-read-heading">Questions, answers!</h2>
+      <h2 id="no-time-to-read-heading">No time to read</h2>
       <p>All the answers to your questions in under 150 characters (<i>even though I'm quite the chatterbox</i>):</p>
 
       <div class="faq-item">
@@ -298,7 +307,7 @@
 
       <div class="faq-item">
         <h3>What tools do you use?</h3>
-        <p>Figma, Notion, ChatGPT, Le Chat, Manus, Posthog, Matomo, Google Search Console, Mobbin, Storybook, Github, trowel, lily, fur ... oh wait, sorry, wrong list, that one's for the building site</p>
+        <p>Figma, Notion, Claude, Le Chat and Mistral's Vibe Code, Manus, Posthog, Matomo, Google Search Console, Mobbin, Storybook, Github, trowel, lily, fur ... oh wait, sorry, that one's for the building site.</p>
       </div>
 
       <div class="faq-item">
@@ -312,7 +321,6 @@
   </main>
 
   <aside class="side-menu" aria-label="Site navigation">
-    <p class="side-menu-label">Site map</p>
     <p class="side-menu-sub">Questions you might be asking yourself:</p>
     <nav>
       <ul class="side-nav">
@@ -320,8 +328,8 @@
         <li><a href="#what-has-he-done" class="side-nav-link"><span class="dot dot-green" aria-hidden="true"></span>What has he done?</a></li>
         <li><a href="#how-does-he-work" class="side-nav-link"><span class="dot dot-red" aria-hidden="true"></span>How does he work?</a></li>
         <li><a href="#what-do-they-think" class="side-nav-link"><span class="dot dot-blue" aria-hidden="true"></span>What do they think?</a></li>
-        <li><a href="#who-does-he-vote-for" class="side-nav-link"><span class="dot dot-green" aria-hidden="true"></span>Who does he vote for?</a></li>
-        <li><a href="#can-i-reach-him" class="side-nav-link"><span class="dot dot-red" aria-hidden="true"></span>Can I reach him?</a></li>
+        <li><a href="#can-i-reach-him" class="side-nav-link"><span class="dot dot-green" aria-hidden="true"></span>Can I reach him?</a></li>
+        <li><a href="#who-does-he-vote-for" class="side-nav-link"><span class="dot dot-red" aria-hidden="true"></span>Who does he vote for?</a></li>
         <li><a href="#no-time-to-read" class="side-nav-link"><span class="dot dot-blue" aria-hidden="true"></span>No time to read</a></li>
       </ul>
     </nav>
@@ -330,6 +338,11 @@
       <p>Designed and built by<br>Lucas Jouin Freelance (myself!)</p>
       <p>Eco-score: —</p>
       <p>Accessibility score (RGAA): —</p>
+      <label class="anim-toggle">
+        <input type="checkbox" class="anim-toggle-input" id="anim-toggle" checked>
+        <span class="anim-toggle-switch" aria-hidden="true"></span>
+        <span class="anim-toggle-label">Site animations</span>
+      </label>
       <div class="lang-select" role="radiogroup" aria-label="Site language">
         <label class="lang-option">
           <input type="radio" name="lang" value="fr">
@@ -341,7 +354,7 @@
         </label>
       </div>
       <p>If you have feedback for me, here's a quick form, guaranteed under 20 seconds. It'll help me improve my site :)</p>
-      <p>Legal notice</p>
+      <p><a href="legal-notice.html">Legal notice</a></p>
     </div>
   </aside>
 

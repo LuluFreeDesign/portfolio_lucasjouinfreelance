@@ -6,9 +6,10 @@
   --color-red: #e64446;
   --color-white: #ffffff;
   --font-mono: 'Space Mono', ui-monospace, SFMono-Regular, monospace;
-  --gap-section: 2rem;
+  --gap-section: 3.5rem;
   --gap-block: 1.5rem;
   --radius: 4px;
+  --color-muted: #cbcbcb;
 }
 
 * {
@@ -49,14 +50,15 @@ a {
   justify-self: start;
   position: sticky;
   top: 2.5rem;
-  display: flex;
-  flex-direction: column;
-  font-weight: 700;
-  font-size: 1rem;
-  line-height: 1.2;
+  display: block;
   text-decoration: none;
-  color: var(--color-text);
   width: max-content;
+}
+
+.site-logo-img {
+  display: block;
+  width: 118px;
+  height: auto;
 }
 
 /* --- Main scrolling content --- */
@@ -139,8 +141,31 @@ a {
   border-top: 1px solid var(--color-text);
 }
 
-.accordion:last-child {
+.accordion-list > .accordion:last-child {
   border-bottom: 1px solid var(--color-text);
+}
+
+/* Company logo to the left of each accordion title */
+.accordion-head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.accordion-logo {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  border-radius: 6px;
+}
+
+/* Two testimonials side by side */
+.accordion-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 1.5rem;
+  align-items: start;
 }
 
 .accordion summary {
@@ -357,8 +382,8 @@ a {
 }
 
 .logo-img {
-  max-height: 40px;
-  max-width: 90px;
+  max-height: 52px;
+  max-width: 120px;
   width: auto;
   height: auto;
 }
@@ -467,6 +492,7 @@ a {
 
 .footer-note {
   font-size: 1rem;
+  color: var(--color-muted);
 }
 
 /* --- Side menu (top-right, sticky) --- */
@@ -482,6 +508,14 @@ a {
   flex-direction: column;
   gap: 1.25rem;
   text-align: right;
+  color: var(--color-muted);
+}
+
+/* Clickable items in the side menu stay full-white so they stand out */
+.side-menu a:not(.back-button),
+.side-menu .lang-option,
+.side-menu .anim-toggle {
+  color: var(--color-text);
 }
 
 .lang-select {
@@ -616,6 +650,116 @@ a {
   font-size: 0.8125rem;
 }
 
+/* --- Animations toggle (accessibility) --- */
+
+.anim-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: 0.8125rem;
+  margin: 0.2rem 0;
+}
+
+.anim-toggle-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.anim-toggle-switch {
+  position: relative;
+  order: 2;
+  width: 34px;
+  height: 18px;
+  flex-shrink: 0;
+  border-radius: 100px;
+  background: #5a5a5a;
+  transition: background-color 0.2s ease;
+}
+
+.anim-toggle-switch::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--color-white);
+  transition: transform 0.2s ease;
+}
+
+.anim-toggle-input:checked + .anim-toggle-switch {
+  background: var(--color-accent);
+}
+
+.anim-toggle-input:checked + .anim-toggle-switch::after {
+  transform: translateX(16px);
+}
+
+.anim-toggle-input:focus-visible + .anim-toggle-switch {
+  outline: 2px solid var(--color-white);
+  outline-offset: 2px;
+}
+
+/* Toggle OFF → kill every animation & transition site-wide */
+html.no-animations *,
+html.no-animations *::before,
+html.no-animations *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+
+/* --- Legal page --- */
+
+.legal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  font-size: 0.9375rem;
+}
+
+.legal-content h2 {
+  font-weight: 700;
+  font-style: italic;
+  font-size: 1.0625rem;
+  margin-top: 0.6rem;
+}
+
+.legal-content ul {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.legal-content a {
+  text-decoration: underline;
+}
+
+/* "Back to site" button replacing the anchor list on the legal page */
+.back-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--color-white);
+  color: var(--color-bg);
+  font-weight: 700;
+  font-style: italic;
+  font-size: 1.0625rem;
+  padding: 0.9rem 1.25rem;
+  border-radius: 100px;
+  text-decoration: none;
+  width: 100%;
+}
+
 /* --- Responsive: collapse to a single column below ~1024px --- */
 
 @media (max-width: 1024px) {
@@ -630,32 +774,43 @@ a {
     grid-column: 1;
   }
 
-  .main-content {
+  /* Logo stays at the top-left, but small, on mobile */
+  .site-logo {
     order: 1;
+    margin-bottom: 1.5rem;
+  }
+
+  .site-logo-img {
+    width: 84px;
+  }
+
+  .main-content {
+    order: 2;
   }
 
   .side-menu {
-    order: 2;
+    order: 3;
     justify-self: stretch;
     max-width: none;
     text-align: left;
     margin-top: 2rem;
   }
 
-  /* Logo moves to the bottom (footer) on mobile */
-  .site-logo {
-    order: 3;
-    margin-top: 2.5rem;
-  }
-
   /* Hide the in-page anchor navigation on mobile — scrolling is enough */
-  .side-menu > .side-menu-label,
   .side-menu > .side-menu-sub,
   .side-menu > nav {
     display: none;
   }
 
   .side-nav-link {
+    justify-content: flex-start;
+  }
+
+  .accordion-pair {
+    grid-template-columns: 1fr;
+  }
+
+  .anim-toggle {
     justify-content: flex-start;
   }
 }
