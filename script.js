@@ -26,37 +26,40 @@ sections.forEach((section) => observer.observe(section));
 if (sections[0]) setActive(sections[0].id);
 
 const lightbox = document.getElementById('lightbox');
-const lightboxImg = lightbox.querySelector('.lightbox-img');
-const lightboxClose = lightbox.querySelector('.lightbox-close');
-const lightboxCaption = lightbox.querySelector('.lightbox-caption');
 
-const openLightbox = (img) => {
-  lightboxImg.src = img.src;
-  lightboxImg.alt = img.alt;
-  const caption = img.dataset.caption || '';
-  lightboxCaption.textContent = caption;
-  lightboxCaption.hidden = !caption;
-  lightbox.hidden = false;
-};
+if (lightbox) {
+  const lightboxImg = lightbox.querySelector('.lightbox-img');
+  const lightboxClose = lightbox.querySelector('.lightbox-close');
+  const lightboxCaption = lightbox.querySelector('.lightbox-caption');
 
-const closeLightbox = () => {
-  lightbox.hidden = true;
-  lightboxImg.src = '';
-  lightboxCaption.textContent = '';
-  lightboxCaption.hidden = true;
-};
+  const openLightbox = (img) => {
+    lightboxImg.src = img.src;
+    lightboxImg.alt = img.alt;
+    const caption = img.dataset.caption || '';
+    lightboxCaption.textContent = caption;
+    lightboxCaption.hidden = !caption;
+    lightbox.hidden = false;
+  };
 
-document.querySelectorAll('.exp-img').forEach((img) => {
-  img.addEventListener('click', () => openLightbox(img));
-});
+  const closeLightbox = () => {
+    lightbox.hidden = true;
+    lightboxImg.src = '';
+    lightboxCaption.textContent = '';
+    lightboxCaption.hidden = true;
+  };
 
-lightboxClose.addEventListener('click', closeLightbox);
-lightbox.addEventListener('click', (event) => {
-  if (event.target === lightbox || event.target === lightboxImg) closeLightbox();
-});
-document.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape' && !lightbox.hidden) closeLightbox();
-});
+  document.querySelectorAll('.exp-img').forEach((img) => {
+    img.addEventListener('click', () => openLightbox(img));
+  });
+
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (event) => {
+    if (event.target === lightbox || event.target === lightboxImg) closeLightbox();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && !lightbox.hidden) closeLightbox();
+  });
+}
 
 const langRadios = document.querySelectorAll('.lang-select input[type="radio"]');
 
@@ -76,8 +79,12 @@ if (langRadios.length) {
       if (!radio.checked) return;
 
       const toEnglish = radio.value === 'en';
-      const target = toEnglish ? '../en/index.html' : '../fr/index.html';
-      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const onLegal = /mentions-legales|legal-notice/.test(window.location.pathname);
+      const target = toEnglish
+        ? (onLegal ? '../en/legal-notice.html' : '../en/index.html')
+        : (onLegal ? '../fr/mentions-legales.html' : '../fr/index.html');
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        || document.documentElement.classList.contains('no-animations');
 
       loadingText.textContent = toEnglish
         ? "Switching to His Majesty's language"
@@ -128,7 +135,7 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
     triggerEcho(link);
 
     const targetY = target.getBoundingClientRect().top + window.scrollY - 40;
-    if (prefersReducedMotion) {
+    if (prefersReducedMotion || document.documentElement.classList.contains('no-animations')) {
       window.scrollTo(0, targetY);
     } else {
       animateScrollTo(targetY, 500);
@@ -136,3 +143,23 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
     history.pushState(null, '', `#${id}`);
   });
 });
+
+// --- Site animations toggle (accessibility) ---
+const animToggle = document.getElementById('anim-toggle');
+
+const applyAnimations = (enabled) => {
+  document.documentElement.classList.toggle('no-animations', !enabled);
+  if (animToggle) animToggle.checked = enabled;
+};
+
+let storedAnimations = 'on';
+try { storedAnimations = localStorage.getItem('site-animations') || 'on'; } catch (e) {}
+applyAnimations(storedAnimations !== 'off');
+
+if (animToggle) {
+  animToggle.addEventListener('change', () => {
+    const enabled = animToggle.checked;
+    try { localStorage.setItem('site-animations', enabled ? 'on' : 'off'); } catch (e) {}
+    applyAnimations(enabled);
+  });
+}
