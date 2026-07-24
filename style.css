@@ -557,6 +557,11 @@ a {
   color: var(--color-text);
 }
 
+/* ...except inline text links, which keep the site's usual link color */
+.side-menu .site-info a {
+  color: var(--color-accent);
+}
+
 .lang-select {
   display: flex;
   flex-direction: column;
